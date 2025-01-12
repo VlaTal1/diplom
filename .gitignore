@@ -2,3 +2,4 @@
 /l_venv
 .env
 .idea
+.ipynb_checkpoints
