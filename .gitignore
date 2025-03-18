@@ -4,3 +4,4 @@
 .idea
 .ipynb_checkpoints
 DEEPSEEK_API_KEY.txt
+__pycache__/
