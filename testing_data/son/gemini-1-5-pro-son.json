@@ -1,0 +1,222 @@
+[
+    {
+        "question": "Що робить людина з \"неситим оком\" у поемі \"Сон\"?",
+        "textPart": "Той неситим оком / За край світа зазирає, / Чи нема країни, / Щоб загарбать і з собою / Взять у домовину.",
+        "answers": [
+            {
+                "answer": "Зазирає за край світа, шукаючи нові землі, щоб загарбати.",
+                "isCorrect": true
+            },
+            {
+                "answer": "Молиться Богу.",
+                "isCorrect": false
+            },
+            {
+                "answer": "Допомагає бідним.",
+                "isCorrect": false
+            },
+            {
+                "answer": "Будує храми.",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "Куди летіла сова уві сні?",
+        "textPart": "Дивлюся: так буцім сова\nЛетить лугами, берегами, та нетрями,\nТа глибокими ярами,\nТа широкими степами,\nТа байраками.",
+        "answers": [
+            {
+                "answer": "Лугами, берегами, нетрями, ярами, степами, байраками.",
+                "isCorrect": true
+            },
+            {
+                "answer": "Над морем та горами.",
+                "isCorrect": false
+            },
+            {
+                "answer": "До лісу та річки.",
+                "isCorrect": false
+            },
+            {
+                "answer": "У село до людей.",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "Хто, згідно з уривком, цурається покритки з байстрям?",
+        "textPart": "То покритка, попідтинню З байстрям шкандибає, Батько й мати одцурались, Й чужі не приймають! Старці навіть цураються!!",
+        "answers": [
+            {
+                "answer": "Батько, мати та навіть старці.",
+                "isCorrect": true
+            },
+            {
+                "answer": "Тільки батько.",
+                "isCorrect": false
+            },
+            {
+                "answer": "Тільки мати.",
+                "isCorrect": false
+            },
+            {
+                "answer": "Княжата.",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "Ким є ті, хто виносить золото з нор, згідно з текстом?",
+        "textPart": "Із нор золото виносять, Щоб пельку залити Неситому!.. То каторжні.",
+        "answers": [
+            {
+                "answer": "Вмерлі",
+                "isCorrect": false
+            },
+            {
+                "answer": "Каторжні",
+                "isCorrect": true
+            },
+            {
+                "answer": "Воїни",
+                "isCorrect": false
+            },
+            {
+                "answer": "Мандрівники",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "Де, за словами людей, відбувався парад?",
+        "textPart": "\"Та де ж вона, тая цяця?\" \"Бон видишь — палаты\".",
+        "answers": [
+            {
+                "answer": "У палатах.",
+                "isCorrect": true
+            },
+            {
+                "answer": "На вулиці.",
+                "isCorrect": false
+            },
+            {
+                "answer": "У церкві.",
+                "isCorrect": false
+            },
+            {
+                "answer": "На майдані.",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "До кого автор порівнює царицю у тексті?",
+        "textPart": "Цариця небога, Мов опеньок засушений, Тонка, довгонога",
+        "answers": [
+            {
+                "answer": "До засушеного опенька.",
+                "isCorrect": true
+            },
+            {
+                "answer": "До квітки.",
+                "isCorrect": false
+            },
+            {
+                "answer": "До пташки.",
+                "isCorrect": false
+            },
+            {
+                "answer": "До дерева.",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "Що було на голові у вершника, якого побачив оповідач?",
+        "textPart": "А на коні сидить охляп, У свит — не свиті, І без шапки. Якимсь листом Голова повита.",
+        "answers": [
+            {
+                "answer": "Лист",
+                "isCorrect": true
+            },
+            {
+                "answer": "Шапка",
+                "isCorrect": false
+            },
+            {
+                "answer": "Хустка",
+                "isCorrect": false
+            },
+            {
+                "answer": "Нічого",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "З якого міста виступали полки, як згадується у вірші? (From which city did the regiments march, as mentioned in the poem?)",
+        "textPart": "Із города із Глухова Полки виступали",
+        "answers": [
+            {
+                "answer": "Глухова (Glukhiv)",
+                "isCorrect": true
+            },
+            {
+                "answer": "Київ (Kyiv)",
+                "isCorrect": false
+            },
+            {
+                "answer": "Москва (Moscow)",
+                "isCorrect": false
+            },
+            {
+                "answer": "Чернігів (Chernihiv)",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "Що відчував оповідач, спостерігаючи за ранковим містом?",
+        "textPart": "А я стояв, дивувався, Та аж страшно стало.",
+        "answers": [
+            {
+                "answer": "Дивування та страх.",
+                "isCorrect": true
+            },
+            {
+                "answer": "Радість та захоплення.",
+                "isCorrect": false
+            },
+            {
+                "answer": "Сум та розпач.",
+                "isCorrect": false
+            },
+            {
+                "answer": "Гнів та обурення.",
+                "isCorrect": false
+            }
+        ]
+    },
+    {
+        "question": "До кого оповідач порівнює царя, коли той вийшов з дверей?",
+        "textPart": "Неначе з берлоги Медвідь виліз, ледве-ледве Переносить ноги;",
+        "answers": [
+            {
+                "answer": "До ведмедя.",
+                "isCorrect": true
+            },
+            {
+                "answer": "До кошеняти.",
+                "isCorrect": false
+            },
+            {
+                "answer": "До індика.",
+                "isCorrect": false
+            },
+            {
+                "answer": "До москаля.",
+                "isCorrect": false
+            }
+        ]
+    }
+]
