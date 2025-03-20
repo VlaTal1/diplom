@@ -2,35 +2,24 @@ from dotenv import load_dotenv
 import pandas as pd
 from collections import defaultdict
 
-from constants import STUDENTS, BOOKS_FOR_CLASSES
+from constants import STUDENTS, BOOKS_FOR_CLASSES, MODELS
 from utils.db import get_test_by_student_class_book
 
 load_dotenv()
 
+# Обратный словарь для получения названия модели по её значению
+MODEL_NAMES = {value: key for key, value in MODELS.items()}
+
 # Создаем структуру данных для хранения оценок
 results = []
 
-# Собираем все уникальные модели, чтобы правильно назвать колонки
-all_models = set()
+# Списки с названиями и значениями моделей
+all_model_names = list(MODELS.keys())  # ["GPT-4o", "Gemini 1.5 Pro", ...]
+all_model_values = list(MODELS.values())  # ["gpt-4o", "gemini-1.5-pro", ...]
 
-# Сначала проходимся и собираем все уникальные модели
-for class_name, students in STUDENTS.items():
-    # Получаем список книг для текущего класса
-    class_books = BOOKS_FOR_CLASSES.get(class_name, {})
-
-    if not class_books:
-        print(f"Предупреждение: для класса {class_name} не найдены книги в BOOKS_FOR_CLASSES")
-        continue
-
-    for student in students:
-        for book_title in class_books.keys():
-            tests = get_test_by_student_class_book(student, class_name, book_title)
-            for test in tests:
-                all_models.add(test["model"])
-
-# Сортируем модели для консистентности колонок
-all_models = sorted(list(all_models))
-print(f"Найдено {len(all_models)} уникальных моделей тестов")
+print(f"Будут использованы следующие модели:")
+for name, value in MODELS.items():
+    print(f"  {name} ({value})")
 
 # Перебираем всех учеников по классам
 for class_name, students in STUDENTS.items():
@@ -59,33 +48,20 @@ for class_name, students in STUDENTS.items():
                 }
 
                 # Добавляем пустые оценки для всех моделей
-                for i, model_name in enumerate(all_models, 1):
-                    if i <= 5:  # Ограничиваемся только первыми 5 моделями
-                        col_name = f"модель {i}"
-                        row_data[col_name] = None
+                for model_name in all_model_names:
+                    row_data[model_name] = None
 
                 results.append(row_data)
                 continue
 
-            # Создаем словарь для хранения оценок по моделям
+            # Создаем словарь для хранения оценок по моделям (ключи - значения моделей)
             model_scores = defaultdict(lambda: None)
 
             # Заполняем словарь оценками
             for test in tests:
-                model_name = test["model"]
-                grade = test.get("grade", None)  # Используем поле grade для получения оценки
-                model_scores[model_name] = grade
-
-            # Вычисляем среднюю оценку (строго по первым 5 моделям, если они есть)
-            model_scores_list = []
-            for i, model_name in enumerate(all_models, 1):
-                if i <= 5:  # Учитываем только первые 5 моделей
-                    score = model_scores.get(model_name)
-                    if score is not None:
-                        model_scores_list.append(score)
-
-            # Вычисляем среднюю оценку только если есть хотя бы одна оценка
-            avg_score = sum(model_scores_list) / len(model_scores_list) if model_scores_list else None
+                model_value = test["model"]  # Значение модели (например, "gpt-4o")
+                grade = test.get("grade", None)  # Оценка из поля grade
+                model_scores[model_value] = grade
 
             # Формируем словарь с данными для текущей строки отчета
             row_data = {
@@ -94,14 +70,24 @@ for class_name, students in STUDENTS.items():
                 "Книга": book_title
             }
 
-            # Добавляем оценки по всем моделям
-            for i, model_name in enumerate(all_models, 1):
-                if i <= 5:  # Ограничиваемся только первыми 5 моделями
-                    col_name = f"модель {i}"
-                    row_data[col_name] = model_scores.get(model_name, None)
+            # Добавляем оценки по всем моделям (используя их названия из MODELS)
+            for model_name in all_model_names:
+                model_value = MODELS[model_name]  # Получаем значение модели по названию
+                row_data[model_name] = model_scores.get(model_value, None)
+
+            # Вычисляем среднюю оценку по всем моделям
+            grades = []
+            for model_name in all_model_names:
+                model_value = MODELS[model_name]
+                grade = model_scores.get(model_value)
+                if grade is not None:
+                    grades.append(grade)
+
+            # Вычисляем среднюю оценку только если есть хотя бы одна оценка
+            avg_grade = sum(grades) / len(grades) if grades else None
 
             # Добавляем среднюю оценку
-            row_data["Средняя оценка"] = avg_score
+            row_data["Средняя оценка"] = avg_grade
 
             # Добавляем строку в общий список результатов
             results.append(row_data)
