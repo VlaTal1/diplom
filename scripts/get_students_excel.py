@@ -98,19 +98,15 @@ df = pd.DataFrame(results)
 # Сортируем данные по классу, ученику и книге
 df = df.sort_values(by=["Класс", "Ученик", "Книга"])
 
-# Форматируем таблицу
+# Форматируем таблицу и сохраняем в Excel
 try:
-    # Сохраняем в Excel с базовым форматированием для заголовков
     output_file = "students_book_scores.xlsx"
 
     with pd.ExcelWriter(output_file, engine='xlsxwriter') as writer:
-        df.to_excel(writer, sheet_name='Оценки', index=False)
-
-        # Получаем рабочий лист и книгу
+        # Получаем рабочую книгу для форматирования
         workbook = writer.book
-        worksheet = writer.sheets['Оценки']
 
-        # Добавляем формат для заголовков
+        # Создаем формат для заголовков (будет использоваться на всех листах)
         header_format = workbook.add_format({
             'bold': True,
             'text_wrap': True,
@@ -118,20 +114,73 @@ try:
             'border': 1
         })
 
-        # Применяем формат к заголовкам
+        # Группируем данные по классам
+        grouped = df.groupby("Класс")
+
+        # Создаем отдельный лист для каждого класса
+        for class_name, class_data in grouped:
+            # Безопасное имя листа (Excel имеет ограничение на имена листов)
+            sheet_name = str(class_name)[:31]  # Ограничиваем длину имени листа
+
+            # Удаляем колонку "Класс" из данных для этого листа (она уже в названии листа)
+            class_sheet_data = class_data.drop(columns=["Класс"])
+
+            # Записываем данные на лист с именем класса
+            class_sheet_data.to_excel(writer, sheet_name=sheet_name, index=False)
+
+            # Форматируем текущий лист
+            worksheet = writer.sheets[sheet_name]
+
+            # Применяем формат к заголовкам
+            for col_num, value in enumerate(class_sheet_data.columns.values):
+                worksheet.write(0, col_num, value, header_format)
+                worksheet.set_column(col_num, col_num, 15)  # Устанавливаем ширину колонки
+
+            # Устанавливаем большую ширину для колонки с названиями книг
+            if "Книга" in class_sheet_data.columns:
+                book_col = list(class_sheet_data.columns).index("Книга")
+                worksheet.set_column(book_col, book_col, 30)
+
+        # Также создаем общий лист со всеми данными
+        df.to_excel(writer, sheet_name='Все классы', index=False)
+
+        # Форматируем общий лист
+        worksheet = writer.sheets['Все классы']
+
+        # Применяем формат к заголовкам общего листа
         for col_num, value in enumerate(df.columns.values):
             worksheet.write(0, col_num, value, header_format)
             worksheet.set_column(col_num, col_num, 15)  # Устанавливаем ширину колонки
 
-        # Устанавливаем большую ширину для колонки с названиями книг
-        book_col = df.columns.get_loc("Книга")
-        worksheet.set_column(book_col, book_col, 30)
+        # Устанавливаем большую ширину для колонки с названиями книг на общем листе
+        if "Книга" in df.columns:
+            book_col = list(df.columns).index("Книга")
+            worksheet.set_column(book_col, book_col, 30)
 
-    print(f"Отчет успешно сохранен в файл {output_file}")
+    print(f"Отчет успешно сохранен в файл {output_file}. Каждый класс записан на отдельный лист.")
 
 except ImportError:
     # Если xlsxwriter не установлен, сохраняем без форматирования
     output_file = "students_book_scores.xlsx"
-    df.to_excel(output_file, index=False)
+
+    # Создаем Excel-файл с разными листами
+    with pd.ExcelWriter(output_file) as writer:
+        # Группируем данные по классам
+        grouped = df.groupby("Класс")
+
+        # Создаем отдельный лист для каждого класса
+        for class_name, class_data in grouped:
+            # Безопасное имя листа
+            sheet_name = str(class_name)[:31]
+
+            # Удаляем колонку "Класс" из данных для этого листа
+            class_sheet_data = class_data.drop(columns=["Класс"])
+
+            # Записываем данные на лист с именем класса
+            class_sheet_data.to_excel(writer, sheet_name=sheet_name, index=False)
+
+        # Также создаем общий лист со всеми данными
+        df.to_excel(writer, sheet_name='Все классы', index=False)
+
     print(f"Отчет успешно сохранен в файл {output_file} (без форматирования)")
     print("Для лучшего форматирования можно установить: pip install xlsxwriter")
