@@ -57,3 +57,15 @@ def get_test_by_student_class_book(student_name, class_name, book):
     print(f"Getting tests for student: {student_name}, class: {class_name}, book: {book}")
     tests = collection.find({"student_name": student_name, "class": class_name, "book": book})
     return tests
+
+
+def get_all():
+    """
+    Retrieves all records from the collection.
+
+    Returns:
+        A cursor object containing all documents in the collection.
+    """
+    print("Getting all records from collection")
+    all_records = collection.find({})
+    return all_records
