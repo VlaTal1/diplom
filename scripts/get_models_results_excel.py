@@ -42,9 +42,6 @@ results = []
 for model_value in MODELS.values():
     model_name = MODEL_NAMES.get(model_value, f"Unknown ({model_value})")
 
-    avg_grade = round(sum(model_grades[model_value]) / len(model_grades[model_value]), 2) if model_grades[
-        model_value] else None
-
     metric_avgs = {}
     for metric in REVIEW_METRICS:
         values = model_metrics[model_value][metric]
@@ -62,7 +59,6 @@ for model_value in MODELS.values():
     row = {
         "Модель": model_name,
         "Кількість записів": record_count,
-        "Середня оцінка": avg_grade
     }
 
     for metric in REVIEW_METRICS:
@@ -74,7 +70,7 @@ for model_value in MODELS.values():
 
 df = pd.DataFrame(results)
 
-df = df.sort_values(by=["Середня оцінка"], ascending=False)
+df = df.sort_values(by=["Середня по метрикам"], ascending=False)
 
 try:
     output_file = "model_metrics.xlsx"
@@ -100,8 +96,7 @@ try:
         number_format = workbook.add_format({'num_format': '0.00'})
 
         for col_num, column in enumerate(df.columns):
-            if column in ["Середня оцінка", "question_correct", "answers_correct", "interesting_question",
-                          "Середня по метрикам"]:
+            if column in ["question_correct", "answers_correct", "interesting_question", "Середня по метрикам"]:
                 for row_num in range(1, len(df) + 1):
                     worksheet.write(row_num, col_num, df.iloc[row_num - 1][column], number_format)
 
