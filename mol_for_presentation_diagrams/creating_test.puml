@@ -6,22 +6,22 @@ participant "Java-мікросервіс" as Java
 participant "PostgreSQL" as Postgres
 participant "RabbitMQ" as RabbitMQ
 participant "Python-мікросервіс" as Python
-participant "Anthropic API" as Anthropic
+participant "Gemini API" as Anthropic
 
 Parent -> Front: Дані для тесту
 Front -> Java: Дані для тесту
 Java -> Postgres: Зберегти дані про тест
 Postgres --> Java: Збережений тест
+Java -->> RabbitMQ: Запит на генерацію тесту
 Java --> Front: Збережений тест
 Front --> Parent: Збережений тест
-Java -->> RabbitMQ: Запит а генерацію
 Python -> RabbitMQ: Перевірка черги на генерацію
 RabbitMQ --> Python: Дані для генерації
 Python -> Python: Підготовка промпту
 Python -> Anthropic: Промпт
 Anthropic --> Python: Згенеровані тести
 Python -->> RabbitMQ: Запит на оновлення тесту
-Java -> RabbitMQ: Перевірка черги згенеровані тести
+Java -> RabbitMQ: Перевірка черги згенерованих тести
 RabbitMQ --> Java: Згенеровані тести
 Java -->> Postgres: Зберегти питання в тест
 
